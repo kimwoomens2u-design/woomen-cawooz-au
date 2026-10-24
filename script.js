@@ -445,3 +445,403 @@ window.addEventListener("DOMContentLoaded", () => {
     closeApp();
   });
 });
+
+/* ==========================================
+   FITUR TAMBAHAN CAYRA IPHONE AU
+   Musik + dua akun X
+   Tempelkan di bawah kode script.js lama
+========================================== */
+
+/* ---------- MUSIC APP ---------- */
+
+const cayraPlaylists = {
+  h2h: [
+    { title: "The Chase", artist: "Hearts2Hearts" },
+    { title: "STYLE", artist: "Hearts2Hearts" },
+    { title: "Focus", artist: "Hearts2Hearts" },
+    { title: "Pretty Please", artist: "Hearts2Hearts" }
+  ],
+  babymonster: [
+    { title: "DRIP", artist: "BABYMONSTER" },
+    { title: "SHEESH", artist: "BABYMONSTER" },
+    { title: "FOREVER", artist: "BABYMONSTER" },
+    { title: "Really Like You", artist: "BABYMONSTER" }
+  ],
+  dangdut: [
+    { title: "Rungkad", artist: "Happy Asmara" },
+    { title: "Ojo Dibandingke", artist: "Farel Prayoga" },
+    { title: "Cikini Gondangdia", artist: "Duo Anggrek" }
+  ],
+  indo: [
+    { title: "Sial", artist: "Mahalini" },
+    { title: "Tak Segampang Itu", artist: "Anggi Marito" },
+    { title: "Komang", artist: "Raim Laode" },
+    { title: "Hati-Hati di Jalan", artist: "Tulus" }
+  ]
+};
+
+let currentPlaylist = "h2h";
+let currentTrackIndex = 0;
+let cayraAudioReady = false;
+
+function renderMusicPlaylist(playlistName) {
+  const list = $("music-track-list");
+  if (!list) return;
+
+  currentPlaylist = cayraPlaylists[playlistName]
+    ? playlistName
+    : "h2h";
+
+  const tracks = cayraPlaylists[currentPlaylist];
+
+  list.innerHTML = tracks.map((track, index) => `
+    <button
+      type="button"
+      class="music-track"
+      data-track-index="${index}"
+      aria-label="Putar ${safeText(track.title)}"
+    >
+      <span class="music-track-number">${index + 1}</span>
+      <span class="music-track-copy">
+        <strong>${safeText(track.title)}</strong>
+        <small>${safeText(track.artist)}</small>
+      </span>
+      <span class="music-track-action">▶</span>
+    </button>
+  `).join("");
+
+  list.querySelectorAll(".music-track").forEach(button => {
+    button.addEventListener("click", () => {
+      playCayraTrack(Number(button.dataset.trackIndex));
+    });
+  });
+
+  document.querySelectorAll("[data-playlist]").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.playlist === currentPlaylist
+    );
+  });
+
+  currentTrackIndex = 0;
+  updateMusicDisplay();
+}
+
+function updateMusicDisplay() {
+  const tracks = cayraPlaylists[currentPlaylist] || [];
+  const track = tracks[currentTrackIndex];
+
+  if (!track) return;
+
+  if ($("now-playing-title")) {
+    $("now-playing-title").textContent = track.title;
+  }
+
+  if ($("now-playing-artist")) {
+    $("now-playing-artist").textContent = track.artist;
+  }
+
+  if ($("now-playing-art")) {
+    $("now-playing-art").textContent = "♫";
+  }
+
+  if ($("music-current-time")) {
+    $("music-current-time").textContent = "00:00";
+  }
+
+  if ($("music-duration")) {
+    $("music-duration").textContent = "YouTube";
+  }
+
+  if ($("music-seek")) {
+    $("music-seek").value = 0;
+  }
+
+  const audio = $("music-audio");
+
+  if (audio && audio.tagName === "AUDIO") {
+    audio.pause();
+    audio.removeAttribute("src");
+    audio.load();
+  }
+}
+
+function playCayraTrack(index) {
+  const tracks = cayraPlaylists[currentPlaylist] || [];
+
+  if (!tracks.length) return;
+
+  currentTrackIndex = Math.max(
+    0,
+    Math.min(index, tracks.length - 1)
+  );
+
+  const track = tracks[currentTrackIndex];
+  updateMusicDisplay();
+
+  const searchQuery = encodeURIComponent(
+    `${track.artist} ${track.title} official audio`
+  );
+
+  const youtubeSearch =
+    `https://www.youtube.com/results?search_query=${searchQuery}`;
+
+  /*
+    Karena file audio lagu belum tersedia di repository,
+    buka pencarian lagu di YouTube agar bisa diputar di sana.
+  */
+  window.open(youtubeSearch, "_blank", "noopener,noreferrer");
+
+  const title = $("now-playing-title");
+  if (title) {
+    title.textContent = track.title;
+  }
+}
+
+function nextCayraTrack() {
+  const tracks = cayraPlaylists[currentPlaylist] || [];
+  if (!tracks.length) return;
+
+  const nextIndex = (currentTrackIndex + 1) % tracks.length;
+  playCayraTrack(nextIndex);
+}
+
+function previousCayraTrack() {
+  const tracks = cayraPlaylists[currentPlaylist] || [];
+  if (!tracks.length) return;
+
+  const previousIndex =
+    (currentTrackIndex - 1 + tracks.length) % tracks.length;
+
+  playCayraTrack(previousIndex);
+}
+
+function setupCayraMusic() {
+  if (!$("music-track-list")) return;
+
+  document.querySelectorAll("[data-playlist]").forEach(button => {
+    button.addEventListener("click", () => {
+      renderMusicPlaylist(button.dataset.playlist);
+    });
+  });
+
+  $("music-prev")?.addEventListener("click", previousCayraTrack);
+  $("music-next")?.addEventListener("click", nextCayraTrack);
+
+  $("music-main-play")?.addEventListener("click", () => {
+    playCayraTrack(currentTrackIndex);
+  });
+
+  $("music-play-toggle")?.addEventListener("click", () => {
+    playCayraTrack(currentTrackIndex);
+  });
+
+  renderMusicPlaylist("h2h");
+}
+
+
+/* ---------- X / TWITTER ---------- */
+
+/*
+  Ini contoh cuitan fiktif untuk akun AU Cayra.
+  Gaya akun publik dibuat santai dan nyeleneh,
+  sedangkan akun privat lebih bebas buat curhat.
+*/
+
+const cayraXPosts = {
+  private: [
+    {
+      user: "cayra",
+      handle: "@cayraafterhours",
+      time: "2 menit",
+      text: "capek jadi manusia yang harus menjelaskan kenapa dirinya capek.",
+      replies: 8,
+      reposts: 12,
+      likes: 47
+    },
+    {
+      user: "cayra",
+      handle: "@cayraafterhours",
+      time: "18 menit",
+      text: "hari ini pengen menghilang sebentar. bukan karena misterius, tapi karena males ditanya 'kenapa?' terus harus jawab 'gapapa'.",
+      replies: 14,
+      reposts: 21,
+      likes: 63
+    },
+    {
+      user: "cayra",
+      handle: "@cayraafterhours",
+      time: "1 jam",
+      text: "aku tuh bisa sabar. cuma kapasitas sabarku kadang kayak baterai 1% yang dipaksa buka maps.",
+      replies: 5,
+      reposts: 17,
+      likes: 82
+    }
+  ],
+
+  public: [
+    {
+      user: "Cayra",
+      handle: "@cayraofficial",
+      time: "12 menit",
+      text: "niatnya hari ini mau produktif. ternyata produktif mikirin mau produktifnya kapan.",
+      replies: 23,
+      reposts: 89,
+      likes: 1204
+    },
+    {
+      user: "Cayra",
+      handle: "@cayraofficial",
+      time: "45 menit",
+      text: "orang lain kalau jatuh bangkit lagi. aku kalau jatuh malah mikir, siapa yang naruh lantai di situ.",
+      replies: 41,
+      reposts: 156,
+      likes: 2831
+    },
+    {
+      user: "Cayra",
+      handle: "@cayraofficial",
+      time: "3 jam",
+      text: "selamat pagi untuk semua orang, kecuali alarm yang bunyi pas mimpinya lagi bagus-bagusnya.",
+      replies: 18,
+      reposts: 104,
+      likes: 1942
+    }
+  ]
+};
+
+let currentXAccount = "private";
+
+function renderXPosts() {
+  const feed = $("x-feed");
+  if (!feed) return;
+
+  const posts = cayraXPosts[currentXAccount] || [];
+
+  feed.innerHTML = posts.map((post, index) => `
+    <article class="x-post">
+      <div class="x-post-avatar">C</div>
+
+      <div class="x-post-body">
+        <div class="x-post-head">
+          <strong>${safeText(post.user)}</strong>
+          <span>${safeText(post.handle)}</span>
+          <span>· ${safeText(post.time)}</span>
+        </div>
+
+        <p>${safeText(post.text)}</p>
+
+        <div class="x-post-actions">
+          <span>♡ ${post.replies}</span>
+          <span>↻ ${post.reposts}</span>
+          <span>♥ ${post.likes}</span>
+          <button
+            type="button"
+            class="x-delete-post"
+            data-post-index="${index}"
+            aria-label="Hapus cuitan"
+          >•••</button>
+        </div>
+      </div>
+    </article>
+  `).join("");
+
+  feed.querySelectorAll(".x-delete-post").forEach(button => {
+    button.addEventListener("click", () => {
+      const index = Number(button.dataset.postIndex);
+      const confirmed = window.confirm("Hapus cuitan ini?");
+
+      if (!confirmed) return;
+
+      cayraXPosts[currentXAccount].splice(index, 1);
+      renderXPosts();
+    });
+  });
+
+  document.querySelectorAll("[data-x-account]").forEach(button => {
+    button.classList.toggle(
+      "active",
+      button.dataset.xAccount === currentXAccount
+    );
+  });
+
+  if ($("x-account-info")) {
+    $("x-account-info").textContent =
+      currentXAccount === "private"
+        ? "🔒 @cayraafterhours · akun privat"
+        : "🌐 @cayraofficial · akun publik";
+  }
+}
+
+function switchXAccount(account) {
+  if (!cayraXPosts[account]) return;
+
+  currentXAccount = account;
+  renderXPosts();
+}
+
+function setupCayraX() {
+  if (!$("x-feed")) return;
+
+  document.querySelectorAll("[data-x-account]").forEach(button => {
+    button.addEventListener("click", () => {
+      switchXAccount(button.dataset.xAccount);
+    });
+  });
+
+  $("x-compose-button")?.addEventListener("click", () => {
+    const form = $("x-compose-form");
+    if (!form) return;
+
+    form.classList.toggle("hidden");
+
+    if (!form.classList.contains("hidden")) {
+      $("x-compose-text")?.focus();
+    }
+  });
+
+  $("x-compose-cancel")?.addEventListener("click", () => {
+    $("x-compose-form")?.classList.add("hidden");
+    if ($("x-compose-text")) $("x-compose-text").value = "";
+  });
+
+  $("x-compose-form")?.addEventListener("submit", event => {
+    event.preventDefault();
+
+    const input = $("x-compose-text");
+    const text = input ? input.value.trim() : "";
+
+    if (!text) return;
+
+    const now = new Date().toLocaleTimeString("id-ID", {
+      hour: "2-digit",
+      minute: "2-digit"
+    });
+
+    cayraXPosts[currentXAccount].unshift({
+      user: currentXAccount === "private" ? "cayra" : "Cayra",
+      handle: currentXAccount === "private"
+        ? "@cayraafterhours"
+        : "@cayraofficial",
+      time: now,
+      text,
+      replies: 0,
+      reposts: 0,
+      likes: 0
+    });
+
+    input.value = "";
+    $("x-compose-form")?.classList.add("hidden");
+    renderXPosts();
+  });
+
+  renderXPosts();
+}
+
+
+/* ---------- MENJALANKAN FITUR TAMBAHAN ---------- */
+
+window.addEventListener("DOMContentLoaded", () => {
+  setupCayraMusic();
+  setupCayraX();
+});
