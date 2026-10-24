@@ -1789,3 +1789,57 @@ button:focus-visible, input:focus-visible, textarea:focus-visible {
     font-size: 13px;
   }
 }
+
+/* === POLISH BODI IPHONE MODERN === */
+
+.iphone {
+  border: 7px solid #55545b;
+  border-radius: 54px;
+  background: #111116;
+  box-shadow:
+    0 0 0 1px #aaa9b0,
+    0 0 0 3px #29282e,
+    0 28px 75px rgba(0, 0, 0, .48);
+  isolation: isolate;
+}
+
+.iphone::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 240;
+  border: 1px solid rgba(255, 255, 255, .22);
+  border-radius: inherit;
+  pointer-events: none;
+}
+
+.dynamic-island {
+  z-index: 260;
+  top: 12px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 108px;
+  height: 31px;
+  border-radius: 22px;
+  background: #050506;
+  border: 1px solid #25252a;
+  box-shadow: 0 1px 3px #0008;
+}
+
+.side-button {
+  background: linear-gradient(90deg, #34343a, #77767d, #333238);
+  border: 1px solid #44434a;
+}
+
+@media (max-width: 430px) {
+  .iphone {
+    border-radius: 48px;
+    border-width: 6px;
+  }
+
+  .dynamic-island {
+    top: 10px;
+    width: 101px;
+    height: 29px;
+  }
+}
