@@ -845,3 +845,118 @@ window.addEventListener("DOMContentLoaded", () => {
   setupCayraMusic();
   setupCayraX();
 });
+
+/* === PERBAIKAN CAYRA: DAFTAR CHAT, KLIK KONTAK, DAN FOTO PROFIL ===
+   Tempel di PALING BAWAH script.js.
+   Data whatsappChats dan instagramDMs yang lama tetap dipakai.
+*/
+
+function avatarInfo(name) {
+  const profiles = {
+    "mnyt🐵": {
+      file: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&q=80",
+      initial: "J"
+    },
+    "Stezi": {
+      file: "https://images.unsplash.com/photo-1531123897727-8f129e1688ce?auto=format&fit=crop&w=200&q=80",
+      initial: "S"
+    },
+    "Yebi": {
+      file: "https://images.unsplash.com/photo-1524504388940-b1c1722653e1?auto=format&fit=crop&w=200&q=80",
+      initial: "Y"
+    },
+    "Cayra": {
+      file: "https://images.unsplash.com/photo-1517841905240-472988babdf9?auto=format&fit=crop&w=200&q=80",
+      initial: "C"
+    },
+    "PremRajveeeKumar_Real": {
+      file: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&w=200&q=80",
+      initial: "P"
+    },
+    "Sutradara": {
+      file: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?auto=format&fit=crop&w=200&q=80",
+      initial: "D"
+    }
+  };
+
+  return profiles[name] || {
+    file: "https://images.unsplash.com/photo-1535713875002-d1d0cf377fde?auto=format&fit=crop&w=200&q=80",
+    initial: String(name || "?").charAt(0).toUpperCase()
+  };
+}
+
+/* Membuat daftar chat dengan tombol yang bisa diklik. */
+function renderChatList(app) {
+  const data = app === "whatsapp" ? whatsappChats : instagramDMs;
+  const container = document.getElementById(app + "-list");
+  if (!container || !data) return;
+
+  container.innerHTML = Object.keys(data).map(name => {
+    const messages = data[name] || [];
+    const last = messages[messages.length - 1];
+    const info = avatarInfo(name);
+
+    return `
+      <button class="wa-contact chat-list-item"
+        type="button"
+        data-chat-app="${safeText(app)}"
+        data-chat-name="${safeText(name)}">
+        <span class="avatar">
+          <img src="${info.file}" alt=""
+            onerror="this.style.display='none'">
+          <span>${safeText(info.initial)}</span>
+        </span>
+        <span class="wa-contact-info chat-list-copy">
+          <span class="wa-contact-top">
+            <strong class="wa-name">${safeText(name)}</strong>
+            <small class="wa-time">${safeText(last ? last[2] : "")}</small>
+          </span>
+          <span class="wa-preview">${safeText(last ? last[1] : "Belum ada pesan")}</span>
+        </span>
+      </button>
+    `;
+  }).join("");
+}
+
+/* Membuka percakapan yang dipilih. */
+function openChat(app, name) {
+  const data = app === "whatsapp" ? whatsappChats : instagramDMs;
+  const detail = document.getElementById("chat-detail");
+
+  if (!data || !data[name] || !detail) return;
+
+  currentChatSource = app;
+  currentChatName = name;
+  currentApp = app;
+
+  document.querySelectorAll(".app-screen").forEach(screen => {
+    screen.classList.add("hidden");
+  });
+
+  document.getElementById("homescreen")?.classList.add("hidden");
+  detail.classList.remove("hidden");
+  detail.classList.toggle("instagram-chat", app === "instagram");
+
+  const nameEl = document.getElementById("chat-name");
+  const subtitleEl = document.getElementById("chat-subtitle");
+  const contextEl = document.getElementById("chat-context");
+
+  if (nameEl) nameEl.textContent = name;
+  if (subtitleEl) {
+    subtitleEl.textContent = name === "mnyt🐵"
+      ? "terakhir dilihat baru-baru ini"
+      : "online";
+  }
+  if (contextEl) contextEl.textContent = "Hari ini";
+
+  setAvatar(document.getElementById("chat-avatar"), name);
+  renderMessages(data[name]);
+}
+
+/* Klik kontak ditangani lewat satu listener. */
+document.addEventListener("click", function(event) {
+  const contact = event.target.closest("[data-chat-app][data-chat-name]");
+  if (!contact) return;
+
+  openChat(contact.dataset.chatApp, contact.dataset.chatName);
+});
