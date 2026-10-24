@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="id">
 <head>
@@ -17,7 +18,10 @@
       <!-- LOCK SCREEN -->
       <section id="lockscreen" class="screen lockscreen">
         <div class="lock-wallpaper"></div>
-        <div class="lock-topline"><span id="lock-status-time">09:41</span><span>● ▮▮ ▰</span></div>
+        <div class="lock-topline">
+          <span id="lock-status-time">09:41</span>
+          <span>● ▮▮ ▰</span>
+        </div>
         <div class="lock-content">
           <div class="lock-date" id="date">Jumat, 23 Oktober</div>
           <div class="lock-time" id="time">09:41</div>
@@ -31,8 +35,11 @@
         <div id="passcode-screen" class="passcode-panel hidden">
           <p class="passcode-title">Masukkan Kode Sandi</p>
           <p class="passcode-hint">Hint: tanggal spesial Cayra</p>
-          <div class="passcode-dots"><span></span><span></span><span></span><span></span></div>
-          <input type="password" id="passcode" inputmode="numeric" maxlength="6" placeholder="Kode sandi" aria-label="Kode sandi">
+          <div class="passcode-dots">
+            <span></span><span></span><span></span><span></span>
+          </div>
+          <input type="password" id="passcode" inputmode="numeric"
+            maxlength="6" placeholder="Kode sandi" aria-label="Kode sandi">
           <div class="passcode-buttons">
             <button type="button" onclick="checkPasscode()">Buka iPhone</button>
             <button type="button" class="text-button" onclick="cancelPasscode()">Batal</button>
@@ -41,7 +48,9 @@
         </div>
         <div class="lock-bottom">
           <button class="round-control" type="button" aria-label="Senter">◉</button>
-          <button id="unlock-button" type="button" class="unlock-prompt">Ketuk untuk membuka <span>↑</span></button>
+          <button id="unlock-button" type="button" class="unlock-prompt">
+            Ketuk untuk membuka <span>↑</span>
+          </button>
           <button class="round-control" type="button" aria-label="Kamera">▣</button>
         </div>
       </section>
@@ -49,37 +58,74 @@
       <!-- HOME SCREEN -->
       <section id="homescreen" class="screen homescreen hidden">
         <div class="home-wallpaper"></div>
-        <div class="status-bar"><span id="home-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
-        <div class="home-greeting"><span>Friday, October 23</span><strong>Cayra's iPhone ✷</strong></div>
+        <div class="status-bar">
+          <span id="home-time">09:41</span>
+          <div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div>
+        </div>
+        <div class="home-greeting">
+          <span>Friday, October 23</span>
+          <strong>Cayra's iPhone ✷</strong>
+        </div>
         <div class="apps-grid" id="apps-grid"></div>
         <div class="home-search"><span>⌕</span> Search</div>
         <div class="dock" id="dock">
-          <button class="dock-app" onclick="openApp('phone')" aria-label="Phone"><span class="app-icon phone">☎</span></button>
-          <button class="dock-app" onclick="openApp('safari')" aria-label="Safari"><span class="app-icon safari">◉</span></button>
-          <button class="dock-app" onclick="openApp('messages')" aria-label="Messages"><span class="app-icon messages">●</span></button>
-          <button class="dock-app" onclick="openApp('music')" aria-label="Music"><span class="app-icon music">♫</span></button>
+          <button class="dock-app" onclick="openApp('phone')" aria-label="Phone">
+            <span class="app-icon phone">☎</span>
+          </button>
+          <button class="dock-app" onclick="openApp('safari')" aria-label="Safari">
+            <span class="app-icon safari">◉</span>
+          </button>
+          <button class="dock-app" onclick="openApp('messages')" aria-label="Messages">
+            <span class="app-icon messages">●</span>
+          </button>
+          <button class="dock-app" onclick="openApp('music')" aria-label="Music">
+            <span class="app-icon music">♫</span>
+          </button>
         </div>
       </section>
 
-      <!-- WHATSAPP LIST -->
+      <!-- WHATSAPP -->
       <section id="whatsapp" class="app-screen whatsapp-screen hidden">
-        <div class="status-bar app-status"><span id="wa-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
-        <header class="wa-titlebar"><h2>WhatsApp</h2><div><button aria-label="Kamera">▧</button><button aria-label="Pesan baru">＋</button></div></header>
+        <div class="status-bar app-status">
+          <span id="wa-time">09:41</span>
+          <div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div>
+        </div>
+        <header class="wa-titlebar">
+          <h2>WhatsApp</h2>
+          <div><button aria-label="Kamera">▧</button><button aria-label="Pesan baru">＋</button></div>
+        </header>
         <div class="wa-search">⌕ &nbsp; Tanya atau cari</div>
-        <div class="wa-filters"><span class="selected">Semua</span><span>Belum dibaca</span><span>Favorit</span><span>Grup</span></div>
+        <div class="wa-filters">
+          <span class="selected">Semua</span><span>Belum dibaca</span>
+          <span>Favorit</span><span>Grup</span>
+        </div>
         <div class="wa-list" id="whatsapp-list"></div>
-        <nav class="tabbar"><button>◉<small>Pembaruan</small></button><button>☎<small>Panggilan</small></button><button class="active">▤<small>Chat</small></button><button>⚙<small>Pengaturan</small></button></nav>
+        <nav class="tabbar">
+          <button>◉<small>Pembaruan</small></button>
+          <button>☎<small>Panggilan</small></button>
+          <button class="active">▤<small>Chat</small></button>
+          <button>⚙<small>Pengaturan</small></button>
+        </nav>
       </section>
 
-      <!-- CHAT DETAIL, shared by WhatsApp and Instagram -->
+      <!-- DETAIL CHAT: WHATSAPP / INSTAGRAM -->
       <section id="chat-detail" class="app-screen chat-screen hidden">
         <header class="chat-topbar">
           <button class="back-button" onclick="backToList()" aria-label="Kembali">‹</button>
           <div class="chat-header-info">
-            <div class="avatar chat-avatar" id="chat-avatar"><img id="chat-pp" src="" alt=""><span id="chat-initial">?</span></div>
-            <div class="chat-title-text"><strong id="chat-name">Nama</strong><small id="chat-subtitle">online</small></div>
+            <div class="avatar chat-avatar" id="chat-avatar">
+              <img id="chat-pp" src="" alt="">
+              <span id="chat-initial">?</span>
+            </div>
+            <div class="chat-title-text">
+              <strong id="chat-name">Nama</strong>
+              <small id="chat-subtitle">online</small>
+            </div>
           </div>
-          <div class="chat-actions"><button aria-label="Panggilan video">▣</button><button aria-label="Panggilan suara">☎</button></div>
+          <div class="chat-actions">
+            <button aria-label="Panggilan video">▣</button>
+            <button aria-label="Panggilan suara">☎</button>
+          </div>
         </header>
         <div class="chat-context" id="chat-context">Hari ini</div>
         <div class="wa-chat-bg" id="chat-scroll">
@@ -93,10 +139,38 @@
         </form>
       </section>
 
+      <!-- INSTAGRAM -->
+      <section id="instagram" class="app-screen instagram-screen hidden">
+        <div class="status-bar app-status">
+          <span id="ig-time">09:41</span>
+          <div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div>
+        </div>
+        <header class="ig-titlebar">
+          <strong>Instagram</strong>
+          <div><button>♡</button><button>➤</button></div>
+        </header>
+        <div class="ig-profile-strip">
+          <div class="story-circle own-story"><span>+</span></div>
+          <div class="story-circle" data-initial="S"><span>Stezi</span></div>
+          <div class="story-circle" data-initial="Y"><span>Yebi</span></div>
+          <div class="story-circle" data-initial="J"><span>mnyt🐵</span></div>
+          <div class="story-circle" data-initial="P"><span>Prem</span></div>
+        </div>
+        <div class="ig-inbox-heading"><h2>Pesan</h2><span>Permintaan</span></div>
+        <div class="content ig-list" id="instagram-list"></div>
+        <nav class="tabbar ig-tabbar">
+          <button>⌂<small>Beranda</small></button>
+          <button>⌕<small>Cari</small></button>
+          <button>＋<small>Buat</small></button>
+          <button>▤<small>Reels</small></button>
+          <button>◉<small>Profil</small></button>
+        </nav>
+      </section>
+
       <!-- NOTES -->
       <section id="notes" class="app-screen generic-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
-        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Notes</h2><button aria-label="Catatan baru">＋</button></header>
+        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Notes</h2><button>＋</button></header>
         <div class="content notes-content" id="notes-content"></div>
       </section>
 
@@ -104,19 +178,49 @@
       <section id="photos" class="app-screen generic-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
         <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Photos</h2><button>•••</button></header>
-        <div class="content" id="photos-content"><div class="empty-state"><div>▧</div><strong>Memories</strong><p>Foto-foto Cayra akan muncul di sini setelah kamu menambahkan gambar ke folder assets.</p></div></div>
+        <div class="content" id="photos-content">
+          <div class="empty-state"><div>▧</div><strong>Memories</strong><p>Foto-foto Cayra akan muncul di sini.</p></div>
+        </div>
       </section>
 
       <!-- MUSIC -->
       <section id="music" class="app-screen generic-screen music-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
         <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Music</h2><button>•••</button></header>
-        <div class="content music-content" id="music-content">
-          <div class="album-art">♫</div><p class="eyebrow">CAYRA'S MIX</p><h2>late night thoughts</h2><p class="muted">a little bit of everything</p>
-          <div class="fake-track"><span>01</span><div><strong>Ditto</strong><small>NewJeans</small></div><span>♡</span></div>
-          <div class="fake-track"><span>02</span><div><strong>Blue</strong><small>Yung Kai</small></div><span>♡</span></div>
-          <div class="fake-track"><span>03</span><div><strong>Love wins all</strong><small>IU</small></div><span>♡</span></div>
-          <div class="music-player"><span>◀</span><span class="play-button">▶</span><span>▶</span></div>
+        <div class="content music-content">
+          <p class="eyebrow">CAYRA'S MIX</p>
+          <h2>late night thoughts</h2>
+          <p class="muted">a little bit of everything</p>
+
+          <div class="music-playlist-tabs">
+            <button class="playlist-tab active" data-playlist="h2h">Heart2Hearts</button>
+            <button class="playlist-tab" data-playlist="babymonster">BABYMONSTER</button>
+            <button class="playlist-tab" data-playlist="dangdut">Dangdut Remix</button>
+            <button class="playlist-tab" data-playlist="indo">Pop Indo Galau</button>
+          </div>
+
+          <div id="music-track-list" class="music-track-list"></div>
+
+          <div class="now-playing">
+            <div class="now-playing-art" id="now-playing-art">♫</div>
+            <div class="now-playing-info">
+              <strong id="now-playing-title">Pilih lagu</strong>
+              <small id="now-playing-artist">Cayra's playlist</small>
+            </div>
+            <button id="music-play-toggle" type="button" aria-label="Putar atau jeda">▶</button>
+          </div>
+          <div class="music-progress">
+            <span id="music-current-time">0:00</span>
+            <input id="music-seek" type="range" min="0" max="100" value="0" aria-label="Posisi lagu">
+            <span id="music-duration">0:00</span>
+          </div>
+          <div class="music-controls">
+            <button id="music-prev" type="button" aria-label="Lagu sebelumnya">|◀</button>
+            <button id="music-main-play" type="button" aria-label="Putar atau jeda">▶</button>
+            <button id="music-next" type="button" aria-label="Lagu berikutnya">▶|</button>
+          </div>
+          <audio id="music-audio" preload="metadata"></audio>
+          <p class="music-note">Musik akan diputar jika sumber audio lagu tersedia.</p>
         </div>
       </section>
 
@@ -124,43 +228,93 @@
       <section id="roblox" class="app-screen generic-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
         <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Roblox</h2><button>•••</button></header>
-        <div class="content roblox-content"><div class="roblox-logo">R</div><h2>What are we playing?</h2><p>the server is waiting for you...</p><div class="game-tile">🌸 &nbsp; Dress to Impress</div><div class="game-tile">🏡 &nbsp; Brookhaven RP</div><div class="game-tile">🐾 &nbsp; Adopt Me!</div></div>
+        <div class="content roblox-content">
+          <div class="roblox-logo">R</div><h2>What are we playing?</h2>
+          <p>the server is waiting for you...</p>
+          <div class="game-tile">🌸 &nbsp; Dress to Impress</div>
+          <div class="game-tile">🏡 &nbsp; Brookhaven RP</div>
+          <div class="game-tile">🐾 &nbsp; Adopt Me!</div>
+        </div>
       </section>
 
-      <!-- INSTAGRAM -->
-      <section id="instagram" class="app-screen instagram-screen hidden">
-        <div class="status-bar app-status"><span id="ig-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
-        <header class="ig-titlebar"><strong>Instagram</strong><div><button>♡</button><button>➤</button></div></header>
-        <div class="ig-profile-strip"><div class="story-circle own-story"><span>+</span></div><div class="story-circle" data-initial="S"><span>Stezi</span></div><div class="story-circle" data-initial="Y"><span>Yebi</span></div><div class="story-circle" data-initial="J"><span>mnyt🐵</span></div><div class="story-circle" data-initial="P"><span>Prem</span></div></div>
-        <div class="ig-inbox-heading"><h2>Pesan</h2><span>Permintaan</span></div>
-        <div class="content ig-list" id="instagram-list"></div>
-        <nav class="tabbar ig-tabbar"><button>⌂<small>Beranda</small></button><button>⌕<small>Cari</small></button><button>＋<small>Buat</small></button><button>▤<small>Reels</small></button><button>◉<small>Profil</small></button></nav>
-      </section>
-
-
+      <!-- CAMERA -->
       <section id="camera" class="app-screen generic-screen camera-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
         <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Camera</h2><span></span></header>
-        <div class="content camera-content"><div class="camera-view"><span>✦</span><small>no memories captured yet</small></div><div class="camera-shutter"></div><p>PHOTO &nbsp; VIDEO &nbsp; PORTRAIT</p></div>
+        <div class="content camera-content">
+          <div class="camera-view"><span>✦</span><small>no memories captured yet</small></div>
+          <div class="camera-shutter"></div><p>PHOTO &nbsp; VIDEO &nbsp; PORTRAIT</p>
+        </div>
       </section>
+
+      <!-- MAIL -->
       <section id="mail" class="app-screen generic-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
         <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Mail</h2><button>＋</button></header>
         <div class="content empty-state"><div>✉</div><strong>All Caught Up</strong><p>Belum ada email baru.</p></div>
       </section>
 
-      <!-- X / TWITTER -->
-      <section id="twitter" class="app-screen generic-screen hidden">
+      <!-- X: DUA AKUN CAYRA -->
+      <section id="twitter" class="app-screen generic-screen x-screen hidden">
         <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
-        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>𝕏</h2><button>＋</button></header>
-        <div class="content x-content"><div class="fake-post"><div class="fake-avatar">C</div><div><strong>cayra</strong> <small>@cayraaa · 2j</small><p>capek jadi orang sabar, besok mau jadi masalah aja</p><div class="post-actions">♡　↻　♡　↗</div></div></div><div class="fake-post"><div class="fake-avatar">S</div><div><strong>stezi</strong> <small>@stzmanager · 1j</small><p>ada yang mau nampung artis telat syuting?</p><div class="post-actions">♡　↻　♡　↗</div></div></div></div>
+        <header class="x-header">
+          <button onclick="closeApp()" aria-label="Kembali">‹</button>
+          <h2>𝕏</h2>
+          <button id="x-account-switch" type="button" aria-label="Ganti akun">⇄</button>
+        </header>
+        <div class="x-account-tabs">
+          <button class="x-account-tab active" data-x-account="private">🔒 Akun gembok</button>
+          <button class="x-account-tab" data-x-account="public">Akun publik</button>
+        </div>
+        <div class="x-account-info" id="x-account-info">
+          <div class="x-profile-avatar">C</div>
+          <div><strong>Cayra</strong><small>@cayraaa · akun pribadi</small></div>
+        </div>
+        <div class="content x-content" id="x-feed"></div>
+        <button id="x-compose-button" class="x-compose-button" type="button" aria-label="Buat tweet">＋</button>
+        <form id="x-compose-form" class="x-compose-form hidden">
+          <textarea id="x-compose-text" placeholder="Apa yang terjadi?"></textarea>
+          <button type="submit">Post</button>
+          <button id="x-compose-cancel" type="button">Batal</button>
+        </form>
       </section>
 
-      <!-- SIMPLE APP SCREENS -->
-      <section id="phone" class="app-screen generic-screen hidden"><div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div><header class="generic-header"><button onclick="closeApp()">‹</button><h2>Phone</h2><span></span></header><div class="content empty-state"><div>☎</div><strong>Favorites</strong><p>Belum ada panggilan favorit.</p></div></section>
-      <section id="safari" class="app-screen generic-screen hidden"><div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div><header class="generic-header"><button onclick="closeApp()">‹</button><h2>Safari</h2><span></span></header><div class="content safari-content"><div class="browser-bar">🔒 &nbsp; search or enter website</div><div class="browser-suggestion">Favorites</div><div class="browser-icons"><span>𝕏</span><span>▶</span><span>♡</span><span>⌕</span></div></div></section>
-      <section id="messages" class="app-screen generic-screen hidden"><div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div><header class="generic-header"><button onclick="closeApp()">‹</button><h2>Messages</h2><button>＋</button></header><div class="content empty-state"><div>💬</div><strong>No Messages</strong><p>Belum ada pesan baru.</p></div></section>
-      <section id="settings" class="app-screen generic-screen hidden"><div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div><header class="generic-header"><button onclick="closeApp()">‹</button><h2>Settings</h2><span></span></header><div class="content settings-content"><div class="settings-profile"><div class="avatar large"><img src="assets/carmen.jpg" alt="" onerror="this.style.display='none'"><span>C</span></div><div><strong>Cayra</strong><small>Apple Account</small></div></div><div class="settings-row">✈️ <span>Airplane Mode</span><i>Off</i></div><div class="settings-row">▰ <span>Wi-Fi</span><i>Connected</i></div><div class="settings-row">🔵 <span>Bluetooth</span><i>On</i></div></div></section>
+      <!-- SIMPLE APPS -->
+      <section id="phone" class="app-screen generic-screen hidden">
+        <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
+        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Phone</h2><span></span></header>
+        <div class="content empty-state"><div>☎</div><strong>Favorites</strong><p>Belum ada panggilan favorit.</p></div>
+      </section>
+
+      <section id="safari" class="app-screen generic-screen hidden">
+        <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
+        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Safari</h2><span></span></header>
+        <div class="content safari-content">
+          <div class="browser-bar">🔒 &nbsp; search or enter website</div>
+          <div class="browser-suggestion">Favorites</div>
+          <div class="browser-icons"><span>𝕏</span><span>▶</span><span>♡</span><span>⌕</span></div>
+        </div>
+      </section>
+
+      <section id="messages" class="app-screen generic-screen hidden">
+        <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
+        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Messages</h2><button>＋</button></header>
+        <div class="content empty-state"><div>💬</div><strong>No Messages</strong><p>Belum ada pesan baru.</p></div>
+      </section>
+
+      <section id="settings" class="app-screen generic-screen hidden">
+        <div class="status-bar app-status"><span class="live-time">09:41</span><div class="status-icons"><span>▮▮▮</span><span>⌁</span><span class="battery">▰</span></div></div>
+        <header class="generic-header"><button onclick="closeApp()">‹</button><h2>Settings</h2><span></span></header>
+        <div class="content settings-content">
+          <div class="settings-profile">
+            <div class="avatar large"><img src="assets/carmen.jpg" alt="" onerror="this.style.display='none'"><span>C</span></div>
+            <div><strong>Cayra</strong><small>Apple Account</small></div>
+          </div>
+          <div class="settings-row">✈️ <span>Airplane Mode</span><i>Off</i></div>
+          <div class="settings-row">▰ <span>Wi-Fi</span><i>Connected</i></div>
+          <div class="settings-row">🔵 <span>Bluetooth</span><i>On</i></div>
+        </div>
+      </section>
 
       <div class="home-indicator" onclick="closeApp()" aria-label="Kembali ke layar utama"></div>
     </div>
