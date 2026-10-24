@@ -460,23 +460,31 @@ const cayraPlaylists = {
     { title: "STYLE", artist: "Hearts2Hearts" },
     { title: "Focus", artist: "Hearts2Hearts" },
     { title: "Pretty Please", artist: "Hearts2Hearts" }
+    { title: "Next Chapter", artist: "Hearts2hearts" }
+    { title: "Lemontang", artist: "Hearts2Hearts" }
+    { title: "Iconic Hearts", artist: "Hearts2Hearts" }
   ],
   babymonster: [
     { title: "DRIP", artist: "BABYMONSTER" },
     { title: "SHEESH", artist: "BABYMONSTER" },
     { title: "FOREVER", artist: "BABYMONSTER" },
     { title: "Really Like You", artist: "BABYMONSTER" }
+    { title: "Drip", artist: "BABYMONSTER" }
+    { title: "DESERVE", artist: "BABYMONSTER" }
+    { title: "Choom", artist: "BABYMONSTER" }
   ],
   dangdut: [
     { title: "Rungkad", artist: "Happy Asmara" },
     { title: "Ojo Dibandingke", artist: "Farel Prayoga" },
     { title: "Cikini Gondangdia", artist: "Duo Anggrek" }
+    { title: "Goyang Dumang", artist: "Cita Citata" }
   ],
   indo: [
     { title: "Sial", artist: "Mahalini" },
     { title: "Tak Segampang Itu", artist: "Anggi Marito" },
     { title: "Komang", artist: "Raim Laode" },
     { title: "Hati-Hati di Jalan", artist: "Tulus" }
+    { title: "Teh Hijau", artist: "Tulus" }
   ]
 };
 
@@ -655,18 +663,18 @@ const cayraXPosts = {
       handle: "@cayraafterhours",
       time: "2 menit",
       text: "capek jadi manusia yang harus menjelaskan kenapa dirinya capek.",
-      replies: 8,
-      reposts: 12,
-      likes: 47
+      replies: 0,
+      reposts: 0,
+      likes: 0
     },
     {
       user: "cayra",
       handle: "@cayraafterhours",
       time: "18 menit",
       text: "hari ini pengen menghilang sebentar. bukan karena misterius, tapi karena males ditanya 'kenapa?' terus harus jawab 'gapapa'.",
-      replies: 14,
-      reposts: 21,
-      likes: 63
+      replies: 0,
+      reposts: 0,
+      likes: 
     },
     {
       user: "cayra",
@@ -959,4 +967,297 @@ document.addEventListener("click", function(event) {
   if (!contact) return;
 
   openChat(contact.dataset.chatApp, contact.dataset.chatName);
+});
+// ====================== FUNGSI UTAMA ======================
+
+let currentApp = "";
+let currentChatName = "";
+
+const appItems = [
+  { id: "whatsapp", name: "WhatsApp", icon: "💬", color: "#25D366" },
+  { id: "instagram", name: "Instagram", icon: "📸", color: "#D94689" },
+  { id: "notes", name: "Notes", icon: "📝", color: "#FFD60A" },
+  { id: "photos", name: "Photos", icon: "🌈", color: "#F5A6A6" },
+  { id: "music", name: "Music", icon: "🎵", color: "#FA2D55" },
+  { id: "roblox", name: "Roblox", icon: "⬛", color: "#FFFFFF" }
+];
+
+// Membuat ikon aplikasi di layar utama
+function renderApps() {
+  const grid = document.getElementById("apps-grid");
+  if (!grid) return;
+
+  grid.innerHTML = "";
+
+  appItems.forEach(app => {
+    const item = document.createElement("button");
+    item.className = "app home-app";
+    item.type = "button";
+    item.setAttribute("aria-label", app.name);
+
+    const icon = document.createElement("span");
+    icon.className = "icon";
+    icon.style.background = app.color;
+    icon.textContent = app.icon;
+
+    const label = document.createElement("span");
+    label.textContent = app.name;
+
+    item.append(icon, label);
+    item.addEventListener("click", () => openApp(app.id));
+    grid.appendChild(item);
+  });
+}
+
+// Memperbarui jam dan tanggal
+function updateTime() {
+  const now = new Date();
+
+  const timeStr = now.toLocaleTimeString("id-ID", {
+    hour: "2-digit",
+    minute: "2-digit"
+  });
+
+  const dateStr = now.toLocaleDateString("id-ID", {
+    weekday: "long",
+    day: "numeric",
+    month: "long"
+  });
+
+  const time = document.getElementById("time");
+  const date = document.getElementById("date");
+  const homeTime = document.getElementById("home-time");
+
+  if (time) time.textContent = timeStr;
+  if (date) date.textContent = dateStr;
+  if (homeTime) homeTime.textContent = timeStr;
+}
+
+// Membuka layar kode sandi
+function showPasscode() {
+  const passcodeScreen = document.getElementById("passcode-screen");
+  if (passcodeScreen) passcodeScreen.classList.remove("hidden");
+}
+
+function cancelPasscode() {
+  const passcodeScreen = document.getElementById("passcode-screen");
+  const input = document.getElementById("passcode");
+
+  if (passcodeScreen) passcodeScreen.classList.add("hidden");
+  if (input) input.value = "";
+}
+
+function checkPasscode() {
+  const input = document.getElementById("passcode");
+  if (!input) return;
+
+  if (input.value === CORRECT_PASSCODE) {
+    document.getElementById("lockscreen").classList.add("hidden");
+    document.getElementById("homescreen").classList.remove("hidden");
+    input.value = "";
+  } else {
+    alert("Kode sandi salah!");
+    input.value = "";
+  }
+}
+
+// Membuka aplikasi
+function openApp(name) {
+  const appScreen = document.getElementById(name);
+
+  if (!appScreen) {
+    console.warn("Layar aplikasi belum tersedia:", name);
+    return;
+  }
+
+  document.getElementById("homescreen").classList.add("hidden");
+
+  document.querySelectorAll(".app-screen").forEach(screen => {
+    screen.classList.add("hidden");
+  });
+
+  appScreen.classList.remove("hidden");
+  currentApp = name;
+
+  if (name === "whatsapp" || name === "instagram") {
+    renderChatList(name);
+  }
+
+  if (name === "notes") renderNotes();
+}
+
+// Kembali ke layar utama
+function closeApp() {
+  document.querySelectorAll(".app-screen").forEach(screen => {
+    screen.classList.add("hidden");
+  });
+
+  document.getElementById("homescreen").classList.remove("hidden");
+  currentApp = "";
+  currentChatName = "";
+}
+
+// Membuat avatar inisial sementara
+function makeAvatar(name) {
+  const initials = name
+    .replace(/[^\p{L}\p{N} ]/gu, "")
+    .trim()
+    .split(/\s+/)
+    .map(word => word[0] || "")
+    .join("")
+    .slice(0, 2)
+    .toUpperCase() || "?";
+
+  const colors = ["#7868A6", "#B8758D", "#538A83", "#B28A55", "#657DA8"];
+  const colorIndex = [...name].reduce((sum, char) => sum + char.charCodeAt(0), 0) % colors.length;
+  const svg = `
+    <svg xmlns="http://www.w3.org/2000/svg" width="100" height="100">
+      <rect width="100" height="100" rx="50" fill="${colors[colorIndex]}"/>
+      <text x="50" y="55" font-size="34" text-anchor="middle"
+        dominant-baseline="middle" fill="white" font-family="Arial">${initials}</text>
+    </svg>`;
+
+  return "data:image/svg+xml;charset=UTF-8," + encodeURIComponent(svg);
+}
+
+// Membuat daftar kontak WhatsApp atau DM Instagram
+function renderChatList(app) {
+  const data = app === "whatsapp" ? whatsappChats : instagramDMs;
+  const container = document.getElementById(app + "-list");
+
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  Object.entries(data).forEach(([name, messages]) => {
+    const lastMessage = messages[messages.length - 1];
+    const item = document.createElement("button");
+    item.type = "button";
+    item.className = "chat-item";
+
+    const avatar = document.createElement("img");
+    avatar.className = "wa-pp";
+    avatar.src = makeAvatar(name);
+    avatar.alt = "";
+
+    const info = document.createElement("div");
+    info.className = "wa-info";
+
+    const title = document.createElement("div");
+    title.className = "wa-name";
+    title.textContent = name;
+
+    const preview = document.createElement("div");
+    preview.className = "wa-preview";
+    preview.textContent = lastMessage ? lastMessage.text : "Belum ada pesan";
+
+    info.append(title, preview);
+    item.append(avatar, info);
+    item.addEventListener("click", () => openChat(app, name));
+
+    container.appendChild(item);
+  });
+}
+
+// Membuka percakapan
+function openChat(app, name) {
+  const data = app === "whatsapp" ? whatsappChats : instagramDMs;
+  const messages = data[name];
+
+  if (!messages) return;
+
+  currentApp = app;
+  currentChatName = name;
+
+  document.getElementById(app).classList.add("hidden");
+  document.getElementById("chat-detail").classList.remove("hidden");
+
+  const chatName = document.getElementById("chat-name");
+  const chatPhoto = document.getElementById("chat-pp");
+  const messageContainer = document.getElementById("chat-messages");
+
+  chatName.textContent = name;
+  chatPhoto.src = makeAvatar(name);
+  chatPhoto.alt = name;
+
+  messageContainer.innerHTML = "";
+
+  messages.forEach(msg => {
+    const bubble = document.createElement("div");
+    bubble.className = "message " + (msg.from === "Aku" ? "me" : "them");
+
+    const text = document.createElement("div");
+    text.textContent = msg.text;
+
+    const time = document.createElement("div");
+    time.className = "time";
+    time.textContent = msg.time;
+
+    bubble.append(text, time);
+    messageContainer.appendChild(bubble);
+  });
+
+  messageContainer.scrollTop = messageContainer.scrollHeight;
+}
+
+// Kembali ke daftar chat yang sebelumnya dibuka
+function backToList() {
+  document.getElementById("chat-detail").classList.add("hidden");
+
+  if (currentApp) {
+    document.getElementById(currentApp).classList.remove("hidden");
+  }
+}
+
+// Menampilkan Notes
+function renderNotes() {
+  const container = document.getElementById("notes-content");
+  if (!container) return;
+
+  container.innerHTML = "";
+
+  notesData.forEach(note => {
+    const item = document.createElement("article");
+    item.className = "note-item";
+
+    const title = document.createElement("h3");
+    title.textContent = note.title;
+
+    const date = document.createElement("small");
+    date.textContent = note.date;
+
+    const body = document.createElement("p");
+    body.textContent = note.body;
+
+    item.append(title, date, body);
+    container.appendChild(item);
+  });
+}
+
+// Inisialisasi setelah HTML selesai dimuat
+document.addEventListener("DOMContentLoaded", () => {
+  renderApps();
+  updateTime();
+  setInterval(updateTime, 1000);
+
+  const lockscreen = document.getElementById("lockscreen");
+  const passcodeScreen = document.getElementById("passcode-screen");
+  const passcodeInput = document.getElementById("passcode");
+
+  lockscreen.addEventListener("click", event => {
+    if (
+      !passcodeScreen.contains(event.target) &&
+      !event.target.closest("button")
+    ) {
+      showPasscode();
+    }
+  });
+
+  passcodeScreen.addEventListener("click", event => {
+    event.stopPropagation();
+  });
+
+  passcodeInput.addEventListener("keydown", event => {
+    if (event.key === "Enter") checkPasscode();
+  });
 });
